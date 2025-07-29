@@ -8,13 +8,10 @@ import { GrScorecard } from "react-icons/gr";
 import { MdEmail } from "react-icons/md";
 import { FaBookOpen } from "react-icons/fa6";
 
-export const SideBar = () => {
-
-
-    const [showSideBar,setSideBar] = useState<boolean>(true)
+export const SideBar = ({showSideBar,setSideBar}:{showSideBar:boolean,setSideBar:(val:boolean)=>void}) => {
 
     return (
-        <div className={`flex flex-col md:w-72  bg-indigo-600 h-screen p-4 space-y-5 text-white translate-w duration-300 ${showSideBar?"w-72":"w-20"} `}>
+        <div className={`flex flex-col w-20 md:w-72 z-50 bg-indigo-600 h-screen p-4 space-y-5 text-white translate-w duration-300 ${showSideBar?"w-72":"w-20"} ${showSideBar?"fixed":"absolute"} md:static`}>
             <div className={`flex justify-between items-center text-3xl rounded py-2 `}>
                 <div className='flex items-center'>
                     <div className={` md:block ${showSideBar?"block":"hidden"}`}>
@@ -30,7 +27,7 @@ export const SideBar = () => {
                     <IoReorderThree size={40}/>
                 </button>
             </div>
-            <Link className='flex text-xl space-x-2 items-center rounded py-2 pl-2 cursor-pointer hover:bg-indigo-700' to={"/#"}>
+            <Link className='flex text-xl space-x-2 items-center rounded py-2 pl-2 cursor-pointer hover:bg-indigo-700' to={"/dashboard"}>
                 <div className='mb-1'>
                     <IoMdHome size={40}/>
                 </div>
@@ -38,7 +35,7 @@ export const SideBar = () => {
                     Home
                 </div>
             </Link>
-            <Link className='flex text-xl space-x-2 items-center rounded py-2 pl-3 cursor-pointer hover:bg-indigo-700' to ={"/#"}>
+            <Link className='flex text-xl space-x-2 items-center rounded py-2 pl-3 cursor-pointer hover:bg-indigo-700' to ={"/Ats"}>
                 <div>
                     <GrScorecard size={35}/>
                 </div>
@@ -46,7 +43,7 @@ export const SideBar = () => {
                     ATS
                 </div>
             </Link>
-            <Link className='flex text-xl space-x-2 items-center rounded py-2 pl-2 cursor-pointer hover:bg-indigo-700' to= {"/#"}>
+            <Link className='flex text-xl space-x-2 items-center rounded py-2 pl-2 cursor-pointer hover:bg-indigo-700' to= {"/sendEmail"}>
                 <div>
                     <MdEmail size={40}/>
                 </div>

@@ -1,8 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { SideBar } from '../component/Sidebar'
 import { GoPeople } from "react-icons/go";
 
+import {useDropzone} from 'react-dropzone'
 import { HiX } from "react-icons/hi";
+import type { AxiosError } from 'axios';
 
 const Sendemail = () => {
     const [showSideBar,setSideBar] = useState<boolean>(true)
@@ -10,6 +12,28 @@ const Sendemail = () => {
     const [email,setEmail] = useState<string[]>([])
 
     const emailRef= useRef<HTMLInputElement>(null)
+
+    const formData = new FormData();
+
+    const onDrop = useCallback(async (files:File[]) => {
+        if (files[0].type==="application/pdf") {
+            formData.append('file',files[0])
+            try{
+                alert("pdf uploaded")
+
+            } catch(error:unknown) {
+                const err = error as AxiosError
+
+                if(err.response) {
+                    alert("unable to upload file please try again later.")
+                }
+            }
+        } else {
+            alert("please upload pdf file")
+        }
+    }, [])
+
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
     const removeElement = (idToRemove:number) => {
         const updatedItems = email.filter((email,index)=>index!=idToRemove)
@@ -46,7 +70,7 @@ const Sendemail = () => {
                                 </p>
                             </div>
                             <div className='grid grid-cols-1 grid-rows-1 text-gray-800 bg-white shadow-md rounded-lg'>
-                                <div className='flex flex-col p-3 space-y-3'>
+                                <div className='flex flex-col p-3 space-y-1'>
                                     {/* add recipents */}
                                     <div className='flex justify-start items-center space-x-2'>
                                         <GoPeople />
@@ -69,7 +93,7 @@ const Sendemail = () => {
                                         ))}
                                     </div>
                                     <div className='flex justify-between text-gray-600 '>
-                                        <input className='border border-gray-200 rounded-md outline-0 pl-2' placeholder='Add email address' ref={emailRef}/>
+                                        <input className='border border-gray-200 bg-gray-100 rounded-md outline-0 pl-2 max-w-50' placeholder='Add email address' ref={emailRef}/>
                                         <button className=' px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md cursor-pointer' onClick={async()=>{
                                             const newEmail = emailRef.current?.value
                                             if(newEmail) {
@@ -78,6 +102,50 @@ const Sendemail = () => {
                                         }}>
                                             +Add 
                                         </button>
+                                    </div>
+                                    <div className='flex flex-col space-y-1 '>
+                                        <div className='text-gray-800'>
+                                            Subject *
+                                        </div>
+                                        <input className='border border-gray-200 text-gray-600 bg-gray-100 rounded-md outline-0 pl-2 ' placeholder='Application  for position title'/>
+                                    </div>
+                                    <div className='flex flex-col space-y-1 '>
+                                        <div className='text-gray-800'>
+                                            Message *
+                                        </div>
+                                        <textarea placeholder="Dear Hiring Manager,&#10;&#10;I am writing to express my interest in the [Position Title] role at [Company Name]...&#10;&#10;Best regards,&#10;[Your Name]" rows={12}
+                                        className="w-full bg-gray-50 rounded-md p-1 shadow-sm border border-gray-100 outline-0"/>
+                                    </div>
+                                    <div className='flex flex-col space-y-1 '>
+                                        <div className='text-gray-800'>
+                                            Attachements
+                                        </div>
+                                         <div className="border-2 border-dotted rounded h-20  border-gray-200 bg-gray-100" {...getRootProps()}>
+                                            <input {...getInputProps()}/>
+                                            <div className='text-gray-600 max-w-[220px] text-center mx-auto h-full items-center pt-2'>
+                                                Drop your resume here or click to browse
+                                            </div>
+                                            </div>
+                                    </div>
+                                    <div className='flex flex-col space-y-1'>
+                                         <div className="p-1 pb-4 rounded-xl border  border-gray-200 bg-gradient-to-r from-indigo-50 to-purple-50 ">
+                                            <div className='font-bold'>
+                                                AI Writing Assistant
+                                            </div>
+                                            <div className='grid grid-cols-1 grid-rows-1 bg-white shadow-sm rounded-md'>
+                                                <div className='flex rounded-md text-gray-800 flex-col justify-start p-1 cursor-pointer hover:bg-indigo-400 '>
+                                                    <div className='text-md'>
+                                                        <div>
+                                                        Professional Tone
+                                                        </div>
+                                                        <div className='text-gray-600 text-sm'>
+                                                            Make it more Formal
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>

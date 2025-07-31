@@ -11,7 +11,7 @@ import { FaBookOpen } from "react-icons/fa6";
 export const SideBar = ({showSideBar,setSideBar}:{showSideBar:boolean,setSideBar:(val:boolean)=>void}) => {
 
     return (
-        <div className={`flex flex-col w-20 md:w-72 z-50 bg-indigo-600 h-screen p-4 space-y-5 text-white translate-w duration-300 ${showSideBar?"w-72":"w-20"} ${showSideBar?"fixed":"absolute"} md:static`}>
+        <div className={`flex flex-col w-20 md:w-72 z-50 bg-indigo-600  min-h-screen p-4 space-y-5 text-white transition-all duration-300 ${showSideBar?"w-72":"w-20"} ${showSideBar?"fixed ":"fixed"} md:static `}>
             <div className={`flex justify-between items-center text-3xl rounded py-2 `}>
                 <div className='flex items-center'>
                     <div className={` md:block ${showSideBar?"block":"hidden"}`}>
@@ -51,7 +51,7 @@ export const SideBar = ({showSideBar,setSideBar}:{showSideBar:boolean,setSideBar
                     Send Email
                 </div>
             </Link>
-            <Link className='flex text-xl space-x-2 items-center rounded py-2 pl-2 cursor-pointer hover:bg-indigo-700' to={"/#"}>
+            <Link className='flex text-xl space-x-2 items-center rounded py-2 pl-2 cursor-pointer hover:bg-indigo-700' to={"/blog"}>
                 <div>
                     <FaBookOpen size={40}/>
                 </div>

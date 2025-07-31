@@ -6,6 +6,7 @@ import LogIn from "./pages/logIn";
 import Dashboard from "./pages/dashboard";
 import Ats from "./pages/Ats";
 import Sendemail from "./pages/Sendemail";
+import Blog from "./pages/Blog";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard/>}/>
                 <Route path="/ATS" element={<Ats/>}/>
                 <Route path="/sendEmail" element={<Sendemail/>}/>
+                <Route path="/blog" element={<Blog/>}/>
             </Routes>
         </BrowserRouter>
     )

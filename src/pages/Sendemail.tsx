@@ -5,6 +5,7 @@ import { GoPeople } from "react-icons/go";
 import {useDropzone} from 'react-dropzone'
 import { HiX } from "react-icons/hi";
 import type { AxiosError } from 'axios';
+import { VscActivateBreakpoints } from "react-icons/vsc";
 
 const Sendemail = () => {
     const [showSideBar,setSideBar] = useState<boolean>(true)
@@ -41,9 +42,9 @@ const Sendemail = () => {
     }
 
     return (
-                <div className='flex '>
+                <div className='flex min-h-screen'>
                     <SideBar showSideBar={showSideBar} setSideBar={setSideBar}/>
-                    <div className={`flex-1 bg-gray-50 ${showSideBar?"h-screen":"ml-20 h-screen md:ml-0 "}`}>
+                    <div className={`flex-1 bg-gray-50  ${showSideBar?"min-h-full":"ml-20 min-h-screen md:ml-0 "}`}>
                         <div className="p-6">
                             <div className='flex justify-center'>
                             <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-indigo-700 to-purple-500 flex items-center justify-center shadow-lg">
@@ -61,7 +62,7 @@ const Sendemail = () => {
                                 </svg>
                             </div>
                             </div>
-                            <div className='flex flex-col justify-center items-center pt-3'>
+                            <div className='flex flex-col justify-center items-center pt-3 pb-2'>
                                 <h1 className='font-semibold text-2xl'>
                                     Compose Email
                                 </h1>
@@ -70,7 +71,7 @@ const Sendemail = () => {
                                 </p>
                             </div>
                             <div className='grid grid-cols-1 grid-rows-1 text-gray-800 bg-white shadow-md rounded-lg'>
-                                <div className='flex flex-col p-3 space-y-1'>
+                                <div className='flex flex-col p-3 space-y-2'>
                                     {/* add recipents */}
                                     <div className='flex justify-start items-center space-x-2'>
                                         <GoPeople />
@@ -78,7 +79,7 @@ const Sendemail = () => {
                                             Recipents
                                         </div>                            
                                     </div>
-                                    <div className='grid grid-cols-1 grid-rows-1 text-white gap-1'>
+                                    <div className='grid grid-cols-1 grid-rows-1 md:grid-cols-2  text-white gap-1'>
                                         {email.map((email,index)=>(
                                             <div key={index} className='bg-gradient-to-br bg-indigo-600 rounded-md shadow-sm text-center flex justify-between p-1'>
                                                 <div>
@@ -92,8 +93,8 @@ const Sendemail = () => {
                                             </div>
                                         ))}
                                     </div>
-                                    <div className='flex justify-between text-gray-600 '>
-                                        <input className='border border-gray-200 bg-gray-100 rounded-md outline-0 pl-2 max-w-50' placeholder='Add email address' ref={emailRef}/>
+                                    <div className='flex justify-between text-gray-600 w-full gap-2'>
+                                        <input className=" md:p-2 md:flex-grow md:w-full md:max-w-full max-w-50 border border-gray-200 bg-gray-100 rounded-md outline-0 pl-2" placeholder='Add email address' ref={emailRef}/>
                                         <button className=' px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md cursor-pointer' onClick={async()=>{
                                             const newEmail = emailRef.current?.value
                                             if(newEmail) {
@@ -107,7 +108,7 @@ const Sendemail = () => {
                                         <div className='text-gray-800'>
                                             Subject *
                                         </div>
-                                        <input className='border border-gray-200 text-gray-600 bg-gray-100 rounded-md outline-0 pl-2 ' placeholder='Application  for position title'/>
+                                        <input className='md:p-2 border border-gray-200 text-gray-600 bg-gray-100 rounded-md outline-0 pl-2 ' placeholder='Application  for position title'/>
                                     </div>
                                     <div className='flex flex-col space-y-1 '>
                                         <div className='text-gray-800'>
@@ -128,12 +129,12 @@ const Sendemail = () => {
                                             </div>
                                     </div>
                                     <div className='flex flex-col space-y-1'>
-                                         <div className="p-1 pb-4 rounded-xl border  border-gray-200 bg-gradient-to-r from-indigo-50 to-purple-50 ">
-                                            <div className='font-bold'>
+                                        <div className="p-1 pb-4 rounded-xl border  border-gray-200 bg-gradient-to-r from-indigo-50 to-purple-50 ">
+                                            <div className='font-bold pb-2'>
                                                 AI Writing Assistant
                                             </div>
-                                            <div className='grid grid-cols-1 grid-rows-1 bg-white shadow-sm rounded-md'>
-                                                <div className='flex rounded-md text-gray-800 flex-col justify-start p-1 cursor-pointer hover:bg-indigo-400 '>
+                                            <div className='grid grid-cols-1 grid-rows-2  shadow-sm rounded-md gap-2'>
+                                                <div className='bg-white flex rounded-md text-gray-800 flex-col justify-start p-1 cursor-pointer hover:bg-indigo-400 '>
                                                     <div className='text-md'>
                                                         <div>
                                                         Professional Tone
@@ -143,9 +144,54 @@ const Sendemail = () => {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div className='bg-white flex rounded-md text-gray-800 flex-col justify-start p-1 cursor-pointer hover:bg-indigo-400 '>
+                                                <div className='text-md'>
+                                                        <div>
+                                                        Resume Tone
+                                                        </div>
+                                                        <div className='text-gray-600 text-sm'>
+                                                            Automatically write message based on pdf
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            
+
                                         </div>
+                                    </div>
+                                    {/* Send Now Button */}
+                                    <div className='flex justify-center '>
+                                        <button className='bg-indigo-600 w-full hover:bg-indigo-700 shadow-md text-xl text-white rounded p-2 cursor-pointer'>
+                                            Send Now
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='grid grid-cols-1 grid-rows-1 text-gray-800 bg-white shadow-md rounded-lg mt-3'>
+                                <div className='flex flex-col p-3 space-y-2'>
+                                    <div className='text-sm font-bold'>
+                                        💡Tips for Multiple Recipients & Scheduling
+                                    </div>
+                                    <div className='text-sm'>
+                                        <div className='flex space-x-0.5 items-center'>
+                                            <VscActivateBreakpoints color='green' />
+                                            <p>
+                                                Multiple Recipients
+                                            </p>
+                                        </div>
+                                        <p className='text-sm/4 text-gray-600 pl-3'>
+                                            Add multiple companies/recuiters to send the same email efficiently
+                                        </p>
+                                    </div>
+                                    <div className='text-sm'>
+                                        <div className='flex space-x-0.5 items-center'>
+                                            <VscActivateBreakpoints color='orange' />
+                                            <p>
+                                                Smart Scheduling
+                                            </p>
+                                        </div>
+                                        <p className='text-sm/4 text-gray-600 pl-3'>
+                                            Schedule emails for business hours (9 AM - 5 PM) for better response rates
+                                        </p>
                                     </div>
                                 </div>
                             </div>

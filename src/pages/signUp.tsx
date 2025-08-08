@@ -18,8 +18,8 @@ export default function Signup() {
 
   return (
     <div className="bg-gray-50 h-screen">
-      <div className="flex justify-center items-center h-screen">
-        <div className="border border-gray-200  p-2 md:p-10 md:py-8 space-y-4  shadow-md rounded-lg text-2xl  bg-white md:w-130">
+      <div className="flex justify-center items-center h-screen flex-wrap">
+        <div className="border border-gray-200  p-2 md:p-10 md:py-8 space-y-4  shadow-md rounded-lg text- w-auto  bg-white md:w-130">
           <div className="text-center font-bold">Create Your Account</div>
           <div className="space-y-1">
             <div className="text-gray-600 text-md">Name</div>

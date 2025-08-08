@@ -65,7 +65,7 @@ export default function LogIn() {
           >
             {loading ? (
               <div className="flex justify-center">
-                <AiOutlineLoading />{" "}
+                <AiOutlineLoading className="animate-spin" />{" "}
               </div>
             ) : (
               "LogIn"

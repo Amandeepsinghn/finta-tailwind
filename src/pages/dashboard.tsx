@@ -1,26 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiFillContainer } from "react-icons/ai";
 import { SideBar } from '../component/Sidebar';
+import axios, { AxiosError } from 'axios';
+const baseUrl = import.meta.env.VITE_ENDPOINT;
 
 
+interface data  {
+    email: number,
+    ats: number,
+    blog: number
+}
 
 
 export default function Dashboard() {
 
     const [showSideBar,setSideBar] = useState<boolean>(true)
-    const totalBlogs = 20;
-    const blogsRead = 7; 
-    const progress = Math.min(Math.round((blogsRead / totalBlogs) * 100), 100)
+    const totalBlogs = 4;
+    const [userData,setUserData] = useState<data>(); 
     
+
+    useEffect(()=>{
+        const fetchData = async() =>{
+            const dashboardData = await axios.get(`${baseUrl}/api/getDashboard`,{headers:{"Authorization":localStorage.getItem("token")}})
+            setUserData(dashboardData.data.body)
+            }
+        fetchData()
+    },[])
+    const blogsRead = userData?.blog ?? 0
+    
+    const progress = Math.min(Math.round((blogsRead / totalBlogs) * 100), 100) ?? 0
+    
+
     const data = [
         {
-            number:8,
+            number:userData?.email,
             title:"Email sent"
         },{
-            number:8,
+            number:userData?.ats,
             title:"ATS Checks"
         }, {
-            number:8,
+            number:userData?.blog,
             title:"Blogs Read"
         }
     ]

@@ -33,11 +33,15 @@ export const AppTest = () => {
 
   return (
     <div className="bg-[#f5f7fa] h-screen">
-      <div className="md:flex md:flex-row md:justify-around h-screen flex flex-col ">
-        <div className="flex-1  p-2">
+      <div className="lg:flex lg:flex-row lg:justify-around lg:w-screen h-screen  flex flex-col p-3">
+        <div className="flex-1 p-2">
           <div className="font-bold text-2xl">Resume Preview</div>
+          <iframe
+            src={data?.resumeUrl}
+            className="lg:h-200 lg:w-170 w-90 sm:w-screen h-110 "
+          />
         </div>
-        <div className="flex-1  p-2 space-y-6">
+        <div className="flex-1  p-2 space-y-6 md">
           <div className="flex justify-between shadow-md bg-white p-3 rounded font-semibold">
             <div>Score</div>
             <div className="text-blue-600">{data?.score}</div>

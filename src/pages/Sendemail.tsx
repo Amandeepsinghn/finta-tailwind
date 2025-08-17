@@ -7,12 +7,18 @@ import { HiX } from "react-icons/hi";
 import type { AxiosError } from "axios";
 import { VscActivateBreakpoints } from "react-icons/vsc";
 import { Link } from "react-router-dom";
+const baseUrl = import.meta.env.VITE_ENDPOINT;
+import axios from "axios";
 
 const Sendemail = () => {
   const [showSideBar, setSideBar] = useState<boolean>(true);
 
   const senderEmail = useRef<HTMLInputElement>(null);
   const appPassword = useRef<HTMLInputElement>(null);
+
+  const [resume, setResume] = useState<string>();
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const [email, setEmail] = useState<string[]>([]);
 
@@ -25,6 +31,17 @@ const Sendemail = () => {
       formData.append("file", files[0]);
       try {
         alert("pdf uploaded");
+        const resumeUrl = await axios.post(
+          `${baseUrl}/api/uploadResume`,
+          formData,
+          {
+            headers: {
+              Authorization: localStorage.getItem("token") || "",
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        setResume(resumeUrl.data.body);
       } catch (error: unknown) {
         const err = error as AxiosError;
 
@@ -156,6 +173,7 @@ const Sendemail = () => {
                   placeholder="Dear Hiring Manager,&#10;&#10;I am writing to express my interest in the [Position Title] role at [Company Name]...&#10;&#10;Best regards,&#10;[Your Name]"
                   rows={12}
                   className="w-full bg-gray-50 rounded-md p-1 shadow-sm border border-gray-100 outline-0"
+                  ref={textAreaRef}
                 />
               </div>
               <div className="flex flex-col space-y-1 ">
@@ -174,7 +192,23 @@ const Sendemail = () => {
                 <div className="p-1 pb-4 rounded-xl border  border-gray-200 bg-gradient-to-r from-indigo-50 to-purple-50 ">
                   <div className="font-bold pb-2">AI Writing Assistant</div>
                   <div className="grid grid-cols-1 grid-rows-2  shadow-sm rounded-md gap-2">
-                    <div className="bg-white flex rounded-md text-gray-800 flex-col justify-start p-1 cursor-pointer hover:bg-indigo-400 ">
+                    <div
+                      className="bg-white flex rounded-md text-gray-800 flex-col justify-start p-1 cursor-pointer hover:bg-indigo-400 "
+                      onClick={async () => {
+                        const formalTone = await axios.post(
+                          `${baseUrl}/api/formalTone`,
+                          { data: textAreaRef.current?.value },
+                          {
+                            headers: {
+                              Authorization: localStorage.getItem("token"),
+                            },
+                          }
+                        );
+                        if (textAreaRef.current) {
+                          textAreaRef.current.value = formalTone.data.body;
+                        }
+                      }}
+                    >
                       <div className="text-md">
                         <div>Professional Tone</div>
                         <div className="text-gray-600 text-sm">
@@ -182,7 +216,25 @@ const Sendemail = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="bg-white flex rounded-md text-gray-800 flex-col justify-start p-1 cursor-pointer hover:bg-indigo-400 ">
+                    <div
+                      className="bg-white flex rounded-md text-gray-800 flex-col justify-start p-1 cursor-pointer hover:bg-indigo-400 "
+                      onClick={async () => {
+                        const resumeTone = await axios.post(
+                          `${baseUrl}/api/pdfbody`,
+                          {
+                            data: resume,
+                          },
+                          {
+                            headers: {
+                              Authorization: localStorage.getItem("token"),
+                            },
+                          }
+                        );
+                        if (textAreaRef.current) {
+                          textAreaRef.current.value = resumeTone.data.body;
+                        }
+                      }}
+                    >
                       <div className="text-md">
                         <div>Resume Tone</div>
                         <div className="text-gray-600 text-sm">

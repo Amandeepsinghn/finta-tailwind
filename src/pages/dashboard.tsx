@@ -52,7 +52,7 @@ export default function Dashboard() {
 
   const data = [
     {
-      number: userData?.email,
+      number: userData?.email ?? 0,
       title: "Email sent",
     },
     {

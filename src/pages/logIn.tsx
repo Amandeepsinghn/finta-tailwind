@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineLoading } from "react-icons/ai";
@@ -16,6 +16,8 @@ export default function LogIn() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const [showError, setError] = useState<boolean>(false);
+
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   return (
     <div className="bg-gray-50 h-screen">
@@ -61,6 +63,16 @@ export default function LogIn() {
                 localStorage.setItem("token", response.data.body);
                 navigator("/dashboard");
               } catch (error: unknown) {
+                const err = error as AxiosError;
+
+                if (err.response?.status == 401) {
+                  const message =
+                    typeof err.response.data === "string"
+                      ? err.response.data
+                      : JSON.stringify(err.response.data);
+                  setErrorMessage(message);
+                }
+
                 setError(true);
               } finally {
                 setLoading(false);
@@ -76,7 +88,7 @@ export default function LogIn() {
             )}
           </button>
           {showError && (
-            <div className="text-red-500 text-center">User does not exsist</div>
+            <div className="text-red-500 text-center">{errorMessage}</div>
           )}
           <div className="flex justify-center pt-4 space-x-1.5">
             <div className=" text-gray-600 text-sm">

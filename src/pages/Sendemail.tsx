@@ -16,10 +16,10 @@ const Sendemail = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const senderEmail = useRef<HTMLInputElement>(null);
-  const appPassword = useRef<HTMLInputElement>(null);
+  const [senderEmail, setSenderEmail] = useState<string>("");
+  const [appPassword, setAppPassword] = useState<string>("");
 
-  const [resume, setResume] = useState<string>();
+  const [resume, setResume] = useState<string>("");
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -29,11 +29,18 @@ const Sendemail = () => {
 
   const emailRef = useRef<HTMLInputElement>(null);
 
+  const [subject, setSubject] = useState<string>("");
+
+  const [resumeName, setResumeName] = useState<string>();
+
   const formData = new FormData();
 
   const onDrop = useCallback(async (files: File[]) => {
     if (files[0].type === "application/pdf") {
       formData.append("file", files[0]);
+
+      setResumeName(files[0].name);
+
       try {
         setLoading(true);
         const resumeUrl = await axios.post(
@@ -116,19 +123,25 @@ const Sendemail = () => {
                   <input
                     className=" md:p-2 md:flex-grow md:w-full md:max-w-full max-w-50 border border-gray-200 bg-gray-100 rounded-md outline-0 pl-2"
                     placeholder="Add sender email address"
-                    ref={senderEmail}
+                    value={senderEmail}
+                    onChange={(e) => setSenderEmail(e.target.value)}
                   />
                   <input
                     className=" md:p-2 md:flex-grow md:w-full md:max-w-full max-w-50 border border-gray-200 bg-gray-100 rounded-md outline-0 pl-2"
                     placeholder="Add password"
-                    ref={appPassword}
+                    value={appPassword}
+                    onChange={(e) => setAppPassword(e.target.value)}
                   />
                 </div>
-                <div className="flex space-x-2.5 flex-col sm:flex-row">
-                  <p className="text-red-400">
-                    Note : You need to provide app password
+                <div className="flex space-x-2.5 flex-col sm:flex-row space-y-1.5">
+                  <p className="text-red-400 text-xs">
+                    Note :app password is required. please click on the given
+                    link
                   </p>
-                  <a href="https://myaccount.google.com/apppasswords">
+                  <a
+                    href="https://myaccount.google.com/apppasswords"
+                    className="text-xs"
+                  >
                     https://myaccount.google.com/apppasswords
                   </a>
                 </div>
@@ -178,6 +191,10 @@ const Sendemail = () => {
                   <input
                     className="md:p-2 border border-gray-200 text-gray-600 bg-gray-100 rounded-md outline-0 pl-2 "
                     placeholder="Application  for position title"
+                    value={subject}
+                    onChange={(e) => {
+                      setSubject(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="flex flex-col space-y-1 ">
@@ -234,7 +251,7 @@ const Sendemail = () => {
                       <div
                         className="bg-white flex rounded-md text-gray-800 flex-col justify-start p-1 cursor-pointer hover:bg-indigo-400 "
                         onClick={async () => {
-                          if (!formData.get("file")) {
+                          if (resume == "") {
                             return alert("please upload the resume first");
                           }
 
@@ -267,7 +284,39 @@ const Sendemail = () => {
                 </div>
                 {/* Send Now Button */}
                 <div className="flex justify-center ">
-                  <button className="bg-indigo-600 w-full hover:bg-indigo-700 shadow-md text-xl text-white rounded p-2 cursor-pointer">
+                  <button
+                    className="bg-indigo-600 w-full hover:bg-indigo-700 shadow-md text-xl text-white rounded p-2 cursor-pointer"
+                    onClick={async () => {
+                      try {
+                        await axios.post(
+                          `${baseUrl}/api/sendEmail`,
+                          {
+                            email: senderEmail,
+                            password: appPassword,
+                            emailSender: email,
+                            subject: subject,
+                            text: message,
+                            filename: resumeName,
+                            resumeUrl: resume,
+                            appPassword: appPassword,
+                          },
+                          {
+                            headers: {
+                              Authorization: localStorage.getItem("token"),
+                            },
+                          }
+                        );
+                      } catch (error: unknown) {
+                        const err = error as AxiosError;
+
+                        if (err.response && err.response.status == 400) {
+                          alert("please write all the credentials correct");
+                        } else {
+                          alert("something went wrong");
+                        }
+                      }
+                    }}
+                  >
                     Send Now
                   </button>
                 </div>

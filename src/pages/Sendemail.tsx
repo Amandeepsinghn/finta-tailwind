@@ -27,11 +27,13 @@ const Sendemail = () => {
 
   const [email, setEmail] = useState<string[]>([]);
 
-  const emailRef = useRef<HTMLInputElement>(null);
+  const [emailRef, setEmailRef] = useState<string>();
 
   const [subject, setSubject] = useState<string>("");
 
   const [resumeName, setResumeName] = useState<string>();
+
+  const [showMessage, setShowMessage] = useState<boolean>(false);
 
   const formData = new FormData();
 
@@ -172,12 +174,15 @@ const Sendemail = () => {
                   <input
                     className=" md:p-2 md:flex-grow md:w-full md:max-w-full max-w-50 border border-gray-200 bg-gray-100 rounded-md outline-0 pl-2"
                     placeholder="Add email address"
-                    ref={emailRef}
+                    value={emailRef}
+                    onChange={(e) => {
+                      setEmailRef(e.target.value);
+                    }}
                   />
                   <button
                     className=" px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md cursor-pointer"
                     onClick={async () => {
-                      const newEmail = emailRef.current?.value;
+                      const newEmail = emailRef;
                       if (newEmail) {
                         setEmail((prev) => [...prev, newEmail]);
                       }
@@ -283,10 +288,11 @@ const Sendemail = () => {
                   </div>
                 </div>
                 {/* Send Now Button */}
-                <div className="flex justify-center ">
+                <div className="flex justify-center flex-col space-y-1.5 ">
                   <button
                     className="bg-indigo-600 w-full hover:bg-indigo-700 shadow-md text-xl text-white rounded p-2 cursor-pointer"
                     onClick={async () => {
+                      setLoading(true);
                       try {
                         await axios.post(
                           `${baseUrl}/api/sendEmail`,
@@ -314,11 +320,19 @@ const Sendemail = () => {
                         } else {
                           alert("something went wrong");
                         }
+                      } finally {
+                        setLoading(false);
+                        setShowMessage(true);
                       }
                     }}
                   >
                     Send Now
                   </button>
+                  {showMessage && (
+                    <div className="text-green-700 text-xs text-center">
+                      Emails have been sent successfully
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

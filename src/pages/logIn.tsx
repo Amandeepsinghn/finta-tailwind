@@ -65,11 +65,14 @@ export default function LogIn() {
               } catch (error: unknown) {
                 const err = error as AxiosError;
 
-                if (err.response?.status == 401) {
+                if (err.response?.status === 401) {
+                  const data = err.response.data as any;
+
                   const message =
-                    typeof err.response.data === "string"
-                      ? err.response.data
-                      : JSON.stringify(err.response.data);
+                    typeof data === "string"
+                      ? data
+                      : data?.body || JSON.stringify(data);
+
                   setErrorMessage(message);
                 }
 

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { AiFillContainer } from "react-icons/ai";
+import { useEffect, useState } from "react";
+
 import { SideBar } from "../component/Sidebar";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 const baseUrl = import.meta.env.VITE_ENDPOINT;
 
 interface data {

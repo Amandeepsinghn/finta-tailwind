@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { SideBar } from "../component/Sidebar";
-import { Link } from "react-router-dom";
+
 import axios from "axios";
 const baseUrl = import.meta.env.VITE_ENDPOINT;
 const Blog = () => {

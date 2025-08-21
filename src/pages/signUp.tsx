@@ -1,6 +1,6 @@
-import axios, { AxiosError } from "axios";
-import React, { useReducer, useRef, useState } from "react";
-import { data, Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineLoading } from "react-icons/ai";
 
 const baseUrl = import.meta.env.VITE_ENDPOINT;
@@ -23,7 +23,11 @@ export default function Signup() {
           <div className="text-center font-bold">Create Your Account</div>
           <div className="space-y-1">
             <div className="text-gray-600 text-md">Name</div>
-            <input className="border-1 p-2 rounded-md border-black pl-4 w-full" placeholder="boggyMan" ref={nameRef} />
+            <input
+              className="border-1 p-2 rounded-md border-black pl-4 w-full"
+              placeholder="boggyMan"
+              ref={nameRef}
+            />
           </div>
           <div className="space-y-1">
             <div className="text-gray-600 text-md">Email Address</div>
@@ -36,7 +40,12 @@ export default function Signup() {
           <div className="space-y-1">
             <div className="text-gray-600 text-md">Password</div>
             <div className="flex justify-between items-center border-1 p-2 rounded-md border-black pl-4 w-full">
-              <input className="outline-0" type={`${password ? "password" : "text"}`} placeholder="••••••••" ref={passwordRef} />
+              <input
+                className="outline-0"
+                type={`${password ? "password" : "text"}`}
+                placeholder="••••••••"
+                ref={passwordRef}
+              />
               <button
                 className="text-indigo-600 hover:text-indigo-700 cursor-pointer"
                 onClick={async () => {
@@ -73,9 +82,17 @@ export default function Signup() {
               "Sign Up"
             )}
           </button>
-          <div>{showError && <div className="text-red-500 flex justify-center">please enter valid credentials</div>}</div>
+          <div>
+            {showError && (
+              <div className="text-red-500 flex justify-center">
+                please enter valid credentials
+              </div>
+            )}
+          </div>
           <div className="flex justify-center pt-4 space-x-1.5">
-            <div className=" text-gray-600 text-sm">Already have an account ?</div>
+            <div className=" text-gray-600 text-sm">
+              Already have an account ?
+            </div>
             <Link className="text-sm text-indigo-600" to={"/login"}>
               Log In
             </Link>

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { SideBar } from "../component/Sidebar";
 import { GoPeople } from "react-icons/go";
 
@@ -7,7 +7,6 @@ import { FadeLoader } from "react-spinners";
 import { HiX } from "react-icons/hi";
 import type { AxiosError } from "axios";
 import { VscActivateBreakpoints } from "react-icons/vsc";
-import { Link } from "react-router-dom";
 const baseUrl = import.meta.env.VITE_ENDPOINT;
 import axios from "axios";
 
@@ -69,10 +68,10 @@ const Sendemail = () => {
     }
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const removeElement = (idToRemove: number) => {
-    const updatedItems = email.filter((email, index) => index != idToRemove);
+    const updatedItems = email.filter((_, index) => index != idToRemove);
     setEmail(updatedItems);
   };
 

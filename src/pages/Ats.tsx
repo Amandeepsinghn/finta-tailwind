@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SideBar } from "../component/Sidebar";
 import { useDropzone } from "react-dropzone";
 import type { AxiosError } from "axios";
@@ -88,7 +88,7 @@ const Ats = () => {
     fetchResume();
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const [showSideBar, setSideBar] = useState<boolean>(true);
   return (

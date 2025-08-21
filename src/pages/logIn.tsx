@@ -1,5 +1,5 @@
-import axios, { AxiosError } from "axios";
-import React, { useReducer, useRef, useState } from "react";
+import axios from "axios";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineLoading } from "react-icons/ai";
 
@@ -33,7 +33,12 @@ export default function LogIn() {
           <div className="space-y-1">
             <div className="text-gray-600 text-md">Password</div>
             <div className="flex justify-between items-center border-1 p-2 rounded-md border-black pl-4 w-full">
-              <input className="outline-0" type={`${password ? "password" : "text"}`} placeholder="••••••••" ref={passwordRef} />
+              <input
+                className="outline-0"
+                type={`${password ? "password" : "text"}`}
+                placeholder="••••••••"
+                ref={passwordRef}
+              />
               <button
                 className="text-indigo-600 hover:text-indigo-700 cursor-pointer"
                 onClick={async () => {
@@ -56,7 +61,6 @@ export default function LogIn() {
                 localStorage.setItem("token", response.data.body);
                 navigator("/dashboard");
               } catch (error: unknown) {
-                const err = error as AxiosError;
                 setError(true);
               } finally {
                 setLoading(false);
@@ -71,9 +75,13 @@ export default function LogIn() {
               "LogIn"
             )}
           </button>
-          {showError && <div className="text-red-500 text-center">User does not exsist</div>}
+          {showError && (
+            <div className="text-red-500 text-center">User does not exsist</div>
+          )}
           <div className="flex justify-center pt-4 space-x-1.5">
-            <div className=" text-gray-600 text-sm">Don't have an account ?</div>
+            <div className=" text-gray-600 text-sm">
+              Don't have an account ?
+            </div>
             <Link className="text-sm text-indigo-600" to={"/signup"}>
               Sign Up
             </Link>

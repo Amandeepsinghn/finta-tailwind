@@ -75,7 +75,7 @@ export default function Dashboard() {
       >
         <div className="p-6">
           <h2 className="font-bold text-gray-800 text-2xl">
-            👋 Welcome back to Defuse
+            Welcome back to Defuse
           </h2>
           <div className="grid grid-cols-1 grid-rows-3 gap-8 mt-8 md:grid-cols-2">
             {data.map((data, index) =>
@@ -94,7 +94,7 @@ export default function Dashboard() {
               ) : (
                 <div className="bg-white p-3 rounded-md shadow-md md:col-span-2">
                   <h2 className="text-lg font-semibold mb-4 text-gray-600">
-                    📚 Blog Progress
+                    Blog Progress
                   </h2>
                   <div className="flex justify-between text-gray-800 ">
                     <div className=" text-sm">Blogs Read</div>
